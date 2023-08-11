@@ -2,14 +2,15 @@ const Ship = require('./ship');
 
 test('ship is initialized with correct length, direction, and position', () => {
     const ship = new Ship(3, 'horizontal', {x: 5, y:2});
+
     expect(ship.length).toBe(3);
     expect(ship.direction).toBe('horizontal');
     expect(ship.position).toEqual({x:5, y:2});
-
 });
 
 test('ship reports sunk status after taking hits equal to its length', () => {
     const ship = new Ship(3, 'horizontal', {x: 5, y:2});
+
     ship.hit();
     expect(ship.isSunk()).toBe(false);
     ship.hit();
@@ -20,6 +21,7 @@ test('ship reports sunk status after taking hits equal to its length', () => {
 
 test('ship occupies correct cells when placed horizontally', () => {
     const ship = new Ship(3, 'horizontal', {x: 2, y:3});
+
     expect(ship.getOccupiedCells()).toEqual([
         {x: 2, y: 3},
         {x: 3, y: 3},
@@ -29,6 +31,7 @@ test('ship occupies correct cells when placed horizontally', () => {
 
 test('ship occupies correct cells when placed vertically', () => {
     const ship = new Ship(3, 'vertical', {x: 2, y:3});
+    
     expect(ship.getOccupiedCells()).toEqual([
         {x: 2, y:3},
         {x: 2, y:2},
