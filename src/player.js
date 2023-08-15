@@ -9,7 +9,7 @@ class Player{
     }
 
     makeMove(x,y){
-        this.opponentGameboard.recieveAttack(x,y);
+        return this.opponentGameboard.recieveAttack(x,y);
     }
 
     setOpponentGameboard(gameboard){

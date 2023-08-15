@@ -10,10 +10,8 @@ test('Game loop lets players take turns', () =>{
     const opponent = new Player('Opponent', opponentGameboard);
     const player = new Player('Player 1', gameboard);
 
-    player.setOpponentGameboard(opponentGameboard);
-    opponent.setOpponentGameboard(gameboard);
-
     const game = new Game(player, opponent);
+    
     expect(game.currentTurn).toBe(1);
     game.takeTurn(1,2);
     expect(game.currentTurn).toBe(2);

@@ -1,3 +1,5 @@
+const Ship = require('./ship');
+
 class Game{
     constructor(player, opponent){
         this.player = player;
@@ -6,14 +8,22 @@ class Game{
         this.winner = null;
     }
 
-    takeTurn(xCor,yCor){
-        if(this.currentTurn == 1){
-            this.player.makeMove(xCor, yCor);
-            this.currentTurn = 2;
-        }else{
-            this.opponent.makeMove(xCor, yCor);
-            this.currentTurn = 1;
+    takeTurn(xCor,yCor, playerNumber){
+        let message = null;
+        if(playerNumber == 1){
+            if(this.currentTurn == 1 && !this.player.gameboard.hasUnplacedShips()){
+                message = this.player.makeMove(xCor, yCor);
+                console.log("Player has taken their turn, swapping to opponent");
+                this.currentTurn = 2;
+            }
+        }else if(playerNumber == 2){
+            if(this.currentTurn == 2){
+                message = this.opponent.makeMove(xCor, yCor);
+                console.log("Opponent has taken their turn, swapping to player");
+                this.currentTurn = 1;
+            }
         }
+        return message;
     }
 
     isOver(){
@@ -28,6 +38,6 @@ class Game{
         return false;
     }
 
-
 }
+
 module.exports = Game;

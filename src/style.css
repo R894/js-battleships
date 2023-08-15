@@ -3,6 +3,16 @@ html, body{
     padding: 0;
     border: 0;
 }
+body{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.msg{
+    margin: 1rem;
+}
 
 .header{
     display: flex;
@@ -23,8 +33,21 @@ html, body{
 
 .content{
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     gap: 10%;
+    flex:1;
+}
+
+.wrapper{
+    display: flex;
+    align-items: center;
+    gap: 10%;
+}
+
+.footer{
+    display: flex;
+    margin-top: auto;
+    justify-content: center;
 }
 
 .cell{
@@ -32,4 +55,9 @@ html, body{
     width: 100%;
     height: 100%;
     border: 1px solid black;
+}
+
+.cell:hover{
+    background-color: cyan;
+    transform: scale(1.1);
 }
