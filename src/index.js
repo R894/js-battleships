@@ -20,6 +20,10 @@ opponent.setOpponentGameboard(gameboard);
 
 const game = new Game(player, opponent);
 
+function getRandomInt(max) {
+  return Math.floor(Math.random() * max);
+}
+
 for(let i=0; i<=9; i++){
     for(let j=0; j<=9; j++){
         let cell = document.createElement('div');
@@ -31,7 +35,7 @@ for(let i=0; i<=9; i++){
                 currentMsg.textContent = 'Place your ships';
                 if(player.gameboard.placeUnplacedShip(j, i)){
                     currentMsg.textContent = `Ship placed at (${j}, ${i})`;
-                    updateCells();
+                    updateCells(gameboard, playerCells);
                 }else{
                     currentMsg.textContent = 'Invalid placement, please choose another';
                 };
@@ -76,11 +80,21 @@ for(let i=0; i<=9; i++){
     }
 }
 
-function updateCells(){
-    let cells = playerCells.querySelectorAll('.cell');
+while(opponentGameboard.hasUnplacedShips()){
+    const randomX = getRandomInt(9);
+    const randomY = getRandomInt(9)
+    if(opponentGameboard.placeUnplacedShip(randomX, randomY)){
+        var element = opponentCells.querySelector(`[data-x='${randomX}'][data-y='${randomY}']`);
+        element.style.backgroundColor='green';
+    };
 
+}
+updateCells(opponentGameboard, opponentCells);
+
+function updateCells(gb, gridDiv){
+    let cells = gridDiv.querySelectorAll('.cell');
     cells.forEach((cell) => {
-        if (gameboard.grid[cell.getAttribute('data-y')][cell.getAttribute('data-x')].containsShip()){
+        if (gb.grid[cell.getAttribute('data-y')][cell.getAttribute('data-x')].containsShip()){
             cell.style.backgroundColor = 'green';
         }
     });
