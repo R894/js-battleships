@@ -58,9 +58,9 @@ class GameBoard{
     }
 
     recieveAttack(x,y){ 
-        if(this.grid[y][x].isHit()){
-            return;
-        }
+        // if(this.grid[y][x].isHit()){
+        //     return null;
+        // }
         return this.grid[y][x].hitCell();
     }
 

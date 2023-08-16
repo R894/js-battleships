@@ -40,17 +40,6 @@ for(let i=0; i<=9; i++){
                     currentMsg.textContent = 'Invalid placement, please choose another';
                 };
                 return;
-            }else{
-                currentMsg.textContent = 'All ships placed, play your turn!';
-            }
-
-            const msg = game.takeTurn(j, i, 2);
-            if(msg === 'hit'){
-                cell.style.backgroundColor = 'red';
-                currentMsg.textContent = `Opponent has hit the player at (${j}, ${i})`;
-            }else if(msg == 'miss'){
-                cell.style.backgroundColor = 'gray';
-                currentMsg.textContent = `Opponent has missed the player at (${j}, ${i})`;
             }
         });
         playerCells.appendChild(cell);
@@ -75,7 +64,12 @@ for(let i=0; i<=9; i++){
                 cell.style.backgroundColor = 'gray';
                 currentMsg.textContent = `Player has missed the opponent at (${j}, ${i})`;
             }
+            if(msg != null){
+                let AIturn = game.takeTurn(getRandomInt(9), getRandomInt(9),2);
+                updateCells(gameboard, playerCells);
+            }
         });
+
         opponentCells.appendChild(cell);
     }
 }
@@ -83,19 +77,17 @@ for(let i=0; i<=9; i++){
 while(opponentGameboard.hasUnplacedShips()){
     const randomX = getRandomInt(9);
     const randomY = getRandomInt(9)
-    if(opponentGameboard.placeUnplacedShip(randomX, randomY)){
-        var element = opponentCells.querySelector(`[data-x='${randomX}'][data-y='${randomY}']`);
-        element.style.backgroundColor='green';
-    };
-
+    opponentGameboard.placeUnplacedShip(randomX, randomY);
 }
-updateCells(opponentGameboard, opponentCells);
 
-function updateCells(gb, gridDiv){
+function updateCells(gb, gridDiv, showShips=true){
     let cells = gridDiv.querySelectorAll('.cell');
     cells.forEach((cell) => {
-        if (gb.grid[cell.getAttribute('data-y')][cell.getAttribute('data-x')].containsShip()){
+        if (gb.grid[cell.getAttribute('data-y')][cell.getAttribute('data-x')].containsShip() && showShips == true){
             cell.style.backgroundColor = 'green';
+        }
+        if(gb.grid[cell.getAttribute('data-y')][cell.getAttribute('data-x')].hit == true){
+            cell.style.backgroundColor = 'gray';
         }
     });
 }
