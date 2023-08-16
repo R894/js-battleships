@@ -13,6 +13,8 @@ const opponentGameboard = new GameBoard();
 const opponent = new Player('Opponent', opponentGameboard);
 const player = new Player('Player 1', gameboard);
 
+let currentMsg = document.querySelector('.msg');
+
 player.setOpponentGameboard(opponentGameboard);
 opponent.setOpponentGameboard(gameboard);
 
@@ -26,13 +28,25 @@ for(let i=0; i<=9; i++){
         cell.setAttribute('data-y', i);
         cell.addEventListener('click', () =>{
             if(player.gameboard.hasUnplacedShips()){
-                player.gameboard.placeUnplacedShip(j, i);
+                currentMsg.textContent = 'Place your ships';
+                if(player.gameboard.placeUnplacedShip(j, i)){
+                    currentMsg.textContent = `Ship placed at (${j}, ${i})`;
+                    updateCells();
+                }else{
+                    currentMsg.textContent = 'Invalid placement, please choose another';
+                };
                 return;
+            }else{
+                currentMsg.textContent = 'All ships placed, play your turn!';
             }
 
             const msg = game.takeTurn(j, i, 2);
             if(msg === 'hit'){
                 cell.style.backgroundColor = 'red';
+                currentMsg.textContent = `Opponent has hit the player at (${j}, ${i})`;
+            }else if(msg == 'miss'){
+                cell.style.backgroundColor = 'gray';
+                currentMsg.textContent = `Opponent has missed the player at (${j}, ${i})`;
             }
         });
         playerCells.appendChild(cell);
@@ -50,10 +64,24 @@ for(let i=0; i<=9; i++){
             const msg = game.takeTurn(j, i, 1);
 
             if(msg === 'hit'){
-                
                 cell.style.backgroundColor = 'red';
+                currentMsg.textContent = 'Hit';
+                currentMsg.textContent = `Player has hit the opponent at (${j}, ${i})`;
+            }else if(msg == 'miss'){
+                cell.style.backgroundColor = 'gray';
+                currentMsg.textContent = `Player has missed the opponent at (${j}, ${i})`;
             }
         });
         opponentCells.appendChild(cell);
     }
+}
+
+function updateCells(){
+    let cells = playerCells.querySelectorAll('.cell');
+
+    cells.forEach((cell) => {
+        if (gameboard.grid[cell.getAttribute('data-y')][cell.getAttribute('data-x')].containsShip()){
+            cell.style.backgroundColor = 'green';
+        }
+    });
 }

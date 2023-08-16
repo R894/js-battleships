@@ -27,7 +27,6 @@ class GameBoard{
 
         for (const pos of ship.getOccupiedCells()) {
             if (this.grid[pos.y][pos.x].containsShip()) {
-                console.log(`${pos.y}, ${pos.x} contains a ship, returning false`);
                 return false;
             }
         }
@@ -51,8 +50,10 @@ class GameBoard{
                 if(this.placeShip(ship)){
                     this.unplacedShips.shift();
                     console.log("shifted");
+                    return true;
                 }
             }
+            return false;
         }
     }
 
