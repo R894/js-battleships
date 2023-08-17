@@ -24,6 +24,40 @@ const dirBtn = document.querySelector('.dir button');
 
 let dir = 'vertical';
 
+function getRandomInt(max) {
+    return Math.floor(Math.random() * max);
+}
+
+console.log(game.isOver());
+
+while(opponentGameboard.hasUnplacedShips()){
+    const randomX = getRandomInt(10);
+    const randomY = getRandomInt(10);
+    const directions = ['horizontal', 'vertical'];
+    opponentGameboard.placeUnplacedShip(randomX, randomY, directions[getRandomInt(2)]);
+}
+
+console.log(game.isOver());
+
+function updateCells(gb, gridDiv, showShips=true){
+    let cells = gridDiv.querySelectorAll('.cell');
+    cells.forEach((cell) => {
+        if (gb.grid[cell.getAttribute('data-y')][cell.getAttribute('data-x')].containsShip() && showShips == true){
+            cell.style.backgroundColor = 'green';
+        }
+
+        if(gb.grid[cell.getAttribute('data-y')][cell.getAttribute('data-x')].hit == true){
+            cell.style.backgroundColor = 'gray';
+        }
+
+        if(gb.grid[cell.getAttribute('data-y')][cell.getAttribute('data-x')].hit == true 
+          && gb.grid[cell.getAttribute('data-y')][cell.getAttribute('data-x')].containsShip()){
+            cell.style.backgroundColor = 'red';
+        }
+    });
+}
+
+
 dirBtn.addEventListener('click', () => {
     if(dir == 'horizontal'){
         dir = 'vertical';
@@ -35,9 +69,7 @@ dirBtn.addEventListener('click', () => {
 });
 
 
-function getRandomInt(max) {
-  return Math.floor(Math.random() * max);
-}
+
 
 for(let i=0; i<=9; i++){
     for(let j=0; j<=9; j++){
@@ -81,32 +113,15 @@ for(let i=0; i<=9; i++){
             }
             if(msg != null){
                 let AIturn = game.takeTurn(getRandomInt(10), getRandomInt(10),2);
+                if(game.isOver()){
+                    currentMsg.textContent = `Game is over! ${game.winner} has won!`;
+                }
                 updateCells(gameboard, playerCells);
             }
         });
-
         opponentCells.appendChild(cell);
     }
 }
 
-while(opponentGameboard.hasUnplacedShips()){
-    const randomX = getRandomInt(10);
-    const randomY = getRandomInt(10);
-    const directions = ['horizontal', 'vertical'];
-    opponentGameboard.placeUnplacedShip(randomX, randomY, directions[getRandomInt(2)]);
-}
 
-function updateCells(gb, gridDiv, showShips=true){
-    let cells = gridDiv.querySelectorAll('.cell');
-    cells.forEach((cell) => {
-        if (gb.grid[cell.getAttribute('data-y')][cell.getAttribute('data-x')].containsShip() && showShips == true){
-            cell.style.backgroundColor = 'green';
-        }
-        if(gb.grid[cell.getAttribute('data-y')][cell.getAttribute('data-x')].hit == true){
-            cell.style.backgroundColor = 'gray';
-        }
-        if(gb.grid[cell.getAttribute('data-y')][cell.getAttribute('data-x')].hit == true && gb.grid[cell.getAttribute('data-y')][cell.getAttribute('data-x')].containsShip()){
-            cell.style.backgroundColor = 'red';
-        }
-    });
-}
+updateCells(opponentGameboard, opponentCells, true);

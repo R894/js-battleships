@@ -66,12 +66,19 @@ class GameBoard{
     }
 
     isGameOver(){
+        if(this.hasUnplacedShips()){
+            return false;
+        }
+
+        let allShipsSunk = true;
+
         this.ships.forEach((ship) => {
-            if(!ship.isSunk()){
-                return false;
+            if(ship.isSunk() == false){
+                allShipsSunk = false;
             }
         });
-        return true;
+        
+        return allShipsSunk;
     }
 }
 

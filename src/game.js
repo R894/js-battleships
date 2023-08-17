@@ -28,11 +28,11 @@ class Game{
 
     isOver(){
         if(this.player.gameboard.isGameOver()){
-            this.winner = this.player.name;
+            this.winner = this.opponent.name;
             return true;
         }
         if(this.opponent.gameboard.isGameOver()){
-            this.winner = this.opponent.name;
+            this.winner = this.player.name;
             return true;
         }
         return false;

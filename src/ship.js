@@ -7,10 +7,10 @@ class Ship{
     }
 
     hit(){
-        //console.log("hit");
+        console.log("hit");
         this.hits += 1;
         if(this.isSunk()){
-            //console.log("Ship has been sunk");
+            console.log("Ship has been sunk");
         }
     }
 
@@ -26,7 +26,6 @@ class Ship{
                 cells.push(coordinate);
             }
             return cells;
-            
         }else{
             let cells = [];
             for(let i = 0;i< this.length; i++){
