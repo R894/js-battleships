@@ -27,16 +27,12 @@ function getRandomInt(max) {
     return Math.floor(Math.random() * max);
 }
 
-console.log(game.isOver());
-
 while(opponentGameboard.hasUnplacedShips()){
     const randomX = getRandomInt(10);
     const randomY = getRandomInt(10);
     const directions = ['horizontal', 'vertical'];
     opponentGameboard.placeUnplacedShip(randomX, randomY, directions[getRandomInt(2)]);
 }
-
-console.log(game.isOver());
 
 function updateCells(gb, gridDiv, showShips=true){
     let cells = gridDiv.querySelectorAll('.cell');
@@ -55,8 +51,6 @@ function updateCells(gb, gridDiv, showShips=true){
         }
     });
 }
-
-
 
 dirBtn.addEventListener('click', () => {
     if(dir == 'horizontal'){
@@ -116,7 +110,6 @@ for(let i=0; i<=9; i++){
 
                 if(game.isOver()){
                     currentMsg.textContent = `Game is over! ${game.winner} has won!`;
-                    stopGame();
                 }
                 updateCells(gameboard, playerCells);
             }
@@ -125,14 +118,5 @@ for(let i=0; i<=9; i++){
     }
 }
 
-function removeAllClickListeners(element) {
-    const newElement = element.cloneNode(true);
-    element.parentNode.replaceChild(newElement, element);
-}
 
-function stopGame(){
-    document.querySelectorAll('.cell').forEach((cell) => {
-        removeAllClickListeners(cell);
-    });
-}
 
