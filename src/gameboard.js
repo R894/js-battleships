@@ -42,14 +42,12 @@ class GameBoard{
         return this.unplacedShips.length != 0;
     }
 
-    placeUnplacedShip(xCor, yCor){
+    placeUnplacedShip(xCor, yCor, dir='vertical'){
         if(this.hasUnplacedShips()){
-            console.log(`passing LENGTH: ${this.unplacedShips[0]} X: ${xCor} Y: ${yCor}`);
-            const ship = new Ship(Number(this.unplacedShips[0]),'vertical', {x: parseInt(xCor), y: parseInt(yCor)});
+            const ship = new Ship(Number(this.unplacedShips[0]), dir, {x: parseInt(xCor), y: parseInt(yCor)});
             if(ship.getOccupiedCells != null){
                 if(this.placeShip(ship)){
                     this.unplacedShips.shift();
-                    console.log("shifted");
                     return true;
                 }
             }
@@ -58,9 +56,6 @@ class GameBoard{
     }
 
     recieveAttack(x,y){ 
-        // if(this.grid[y][x].isHit()){
-        //     return null;
-        // }
         return this.grid[y][x].hitCell();
     }
 

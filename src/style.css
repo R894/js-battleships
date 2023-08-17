@@ -10,7 +10,7 @@ body{
     min-height: 100vh;
 }
 
-.msg{
+.msg, .dir{
     margin: 1rem;
 }
 

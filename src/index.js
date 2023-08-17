@@ -20,6 +20,21 @@ opponent.setOpponentGameboard(gameboard);
 
 const game = new Game(player, opponent);
 
+const dirBtn = document.querySelector('.dir button');
+
+let dir = 'horizontal';
+
+dirBtn.addEventListener('click', () => {
+    if(dir == 'horizontal'){
+        dir = 'vertical';
+        dirBtn.textContent = 'Dir: Y';
+    }else{
+        dir = 'horizontal';
+        dirBtn.textContent = 'Dir: X';
+    }
+});
+
+
 function getRandomInt(max) {
   return Math.floor(Math.random() * max);
 }
@@ -33,7 +48,7 @@ for(let i=0; i<=9; i++){
         cell.addEventListener('click', () =>{
             if(player.gameboard.hasUnplacedShips()){
                 currentMsg.textContent = 'Place your ships';
-                if(player.gameboard.placeUnplacedShip(j, i)){
+                if(player.gameboard.placeUnplacedShip(j, i, dir)){
                     currentMsg.textContent = `Ship placed at (${j}, ${i})`;
                     updateCells(gameboard, playerCells);
                 }else{
