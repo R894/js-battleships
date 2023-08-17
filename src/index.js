@@ -22,7 +22,7 @@ const game = new Game(player, opponent);
 
 const dirBtn = document.querySelector('.dir button');
 
-let dir = 'horizontal';
+let dir = 'vertical';
 
 dirBtn.addEventListener('click', () => {
     if(dir == 'horizontal'){
@@ -91,8 +91,9 @@ for(let i=0; i<=9; i++){
 
 while(opponentGameboard.hasUnplacedShips()){
     const randomX = getRandomInt(9);
-    const randomY = getRandomInt(9)
-    opponentGameboard.placeUnplacedShip(randomX, randomY);
+    const randomY = getRandomInt(9);
+    const directions = ['horizontal', 'vertical'];
+    opponentGameboard.placeUnplacedShip(randomX, randomY, directions[getRandomInt(2)]);
 }
 
 function updateCells(gb, gridDiv, showShips=true){
@@ -103,6 +104,9 @@ function updateCells(gb, gridDiv, showShips=true){
         }
         if(gb.grid[cell.getAttribute('data-y')][cell.getAttribute('data-x')].hit == true){
             cell.style.backgroundColor = 'gray';
+        }
+        if(gb.grid[cell.getAttribute('data-y')][cell.getAttribute('data-x')].hit == true && gb.grid[cell.getAttribute('data-y')][cell.getAttribute('data-x')].containsShip()){
+            cell.style.backgroundColor = 'red';
         }
     });
 }
