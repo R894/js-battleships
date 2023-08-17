@@ -21,11 +21,17 @@ class GameBoard{
     }
 
     placeShip(ship){
+
+
         if(ship.getOccupiedCells() == null){
             return false;
         }
 
         for (const pos of ship.getOccupiedCells()) {
+            if(pos.y > 9 || pos.y < 0 || pos.x > 9 || pos.x < 0){
+                return false; // out of grid range
+            }
+
             if (this.grid[pos.y][pos.x].containsShip()) {
                 return false;
             }

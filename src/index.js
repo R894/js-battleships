@@ -80,7 +80,7 @@ for(let i=0; i<=9; i++){
                 currentMsg.textContent = `Player has missed the opponent at (${j}, ${i})`;
             }
             if(msg != null){
-                let AIturn = game.takeTurn(getRandomInt(9), getRandomInt(9),2);
+                let AIturn = game.takeTurn(getRandomInt(10), getRandomInt(10),2);
                 updateCells(gameboard, playerCells);
             }
         });
@@ -90,8 +90,8 @@ for(let i=0; i<=9; i++){
 }
 
 while(opponentGameboard.hasUnplacedShips()){
-    const randomX = getRandomInt(9);
-    const randomY = getRandomInt(9);
+    const randomX = getRandomInt(10);
+    const randomY = getRandomInt(10);
     const directions = ['horizontal', 'vertical'];
     opponentGameboard.placeUnplacedShip(randomX, randomY, directions[getRandomInt(2)]);
 }
