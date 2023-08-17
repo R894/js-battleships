@@ -2,7 +2,6 @@ import './style.css';
 const GameBoard = require('./gameboard');
 const Player = require('./player');
 const Game = require('./game');
-const Ship = require('./ship');
 
 const playerCells = document.querySelector('.player-grid');
 const opponentCells = document.querySelector('.opponent-grid');
@@ -58,6 +57,7 @@ function updateCells(gb, gridDiv, showShips=true){
 }
 
 
+
 dirBtn.addEventListener('click', () => {
     if(dir == 'horizontal'){
         dir = 'vertical';
@@ -67,9 +67,6 @@ dirBtn.addEventListener('click', () => {
         dirBtn.textContent = 'Dir: X';
     }
 });
-
-
-
 
 for(let i=0; i<=9; i++){
     for(let j=0; j<=9; j++){
@@ -103,7 +100,7 @@ for(let i=0; i<=9; i++){
         cell.addEventListener('click', (e) =>{
             const msg = game.takeTurn(j, i, 1);
 
-            if(msg === 'hit'){
+            if(msg == 'hit'){
                 cell.style.backgroundColor = 'red';
                 currentMsg.textContent = 'Hit';
                 currentMsg.textContent = `Player has hit the opponent at (${j}, ${i})`;
@@ -113,8 +110,13 @@ for(let i=0; i<=9; i++){
             }
             if(msg != null){
                 let AIturn = game.takeTurn(getRandomInt(10), getRandomInt(10),2);
+                if(AIturn =='hit'){
+                    currentMsg.textContent = `You've been hit at (${j}, ${i})`;
+                }
+
                 if(game.isOver()){
                     currentMsg.textContent = `Game is over! ${game.winner} has won!`;
+                    stopGame();
                 }
                 updateCells(gameboard, playerCells);
             }
@@ -123,5 +125,14 @@ for(let i=0; i<=9; i++){
     }
 }
 
+function removeAllClickListeners(element) {
+    const newElement = element.cloneNode(true);
+    element.parentNode.replaceChild(newElement, element);
+}
 
-updateCells(opponentGameboard, opponentCells, true);
+function stopGame(){
+    document.querySelectorAll('.cell').forEach((cell) => {
+        removeAllClickListeners(cell);
+    });
+}
+
